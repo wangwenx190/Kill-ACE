@@ -12,7 +12,7 @@ if (-not $isAdmin) {
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
 
 # 目标进程名称（白名单进程不终止）
-$processNames = @("SGuardSvc64", "SGuard64", "ACE-Tray", "browser", "delta_force_launcher", "AclosGameProxy", "CrossProxy", "无畏契约登录器")
+$processNames = @("SGuardSvc64", "SGuard64", "ACE-Tray", "browser", "delta_force_launcher")#, "AclosGameProxy", "CrossProxy", "无畏契约登录器", "chrome"
 $whitelist = @("delta_force_launcher", "browser", "AclosGameProxy", "CrossProxy", "无畏契约登录器")  # 白名单进程，仅限制不终止
 
 # 目标服务名称（使用 DisplayName，需确认）

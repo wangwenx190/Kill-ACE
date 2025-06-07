@@ -1,7 +1,13 @@
 # PowerShell script to switch power schemes
 
 while ($true) {
+    # 显示当前激活的电源方案
+    $activeScheme = powercfg -getactivescheme
+    Write-Host "当前激活的电源方案：$activeScheme"
+    Write-Host ""
+
     # 显示菜单
+    Write-Host ""
     Write-Host "请选择一个电源方案："
     Write-Host "1. 卓越性能"
     Write-Host "2. 高性能"
