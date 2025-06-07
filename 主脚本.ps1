@@ -53,6 +53,12 @@ foreach ($service in $serviceNames) {
 }
 
 Write-Host "`n=== 开始处理进程 ===" -ForegroundColor Cyan
+# 获取 CPU 核数量
+$cpuCount = [Environment]::ProcessorCount
+# 计算最后一个 CPU 核的亲和性掩码
+$lastCpuMask = [IntPtr] (1 -shl ($cpuCount - 1))
+Write-Host "CPU 核数量: $cpuCount, 最后一个 CPU 核: $($cpuCount - 1), 掩码: $lastCpuMask" -ForegroundColor White
+
 # 处理目标进程
 foreach ($name in $processNames) {
     # 查找目标进程
@@ -62,10 +68,10 @@ foreach ($name in $processNames) {
         foreach ($process in $processes) {
             Write-Host "`n找到进程: $($process.Name), PID: $($process.Id)" -ForegroundColor White
 
-            # 设置 CPU 亲和性为 CPU 0
+            # 设置 CPU 亲和性为最后一个 CPU 核
             try {
-                $process.ProcessorAffinity = 1
-                Write-Host "已将 $($process.Name) 的 CPU 亲和性设置为 CPU 0" -ForegroundColor Green
+                $process.ProcessorAffinity = $lastCpuMask
+                Write-Host "已将 $($process.Name) 的 CPU 亲和性设置为 CPU $($cpuCount - 1)" -ForegroundColor Green
             } catch {
                 Write-Host "无法设置 $($process.Name) 的 CPU 亲和性: $($_.Exception.Message)`n可能需要更高权限（如 SYSTEM）。" -ForegroundColor Yellow
             }
@@ -136,6 +142,7 @@ foreach ($name in $processNames) {
 }
 
 Write-Host "`n=== 设置和关闭尝试完成 ===" -ForegroundColor Green
+Write-Host "`n当前版本 : 1.0.1`n脚本没有更新能力，脚本后续会有修复bug之类的，如需更新`n请访问 : https://ftnknc.lanzouo.com/b0sxutpvc`n密码:1eo8" -ForegroundColor Green
 
 # 添加选项菜单
 while ($true) {
