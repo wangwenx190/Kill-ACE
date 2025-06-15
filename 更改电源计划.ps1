@@ -1,79 +1,75 @@
-ï»¿# PowerShell script to switch power schemes
+# PowerShell script to switch power schemes
 
 while ($true) {
-    # æ˜¾ç¤ºå½“å‰æ¿€æ´»çš„ç”µæºæ–¹æ¡ˆ
+    # ÏÔÊ¾µ±Ç°¼¤»îµÄµçÔ´·½°¸
     $activeScheme = powercfg -getactivescheme
-    Write-Host "å½“å‰æ¿€æ´»çš„ç”µæºæ–¹æ¡ˆï¼š$activeScheme"
+    Write-Host "µ±Ç°¼¤»îµÄµçÔ´·½°¸£º$activeScheme"
     Write-Host ""
 
-    # æ˜¾ç¤ºèœå•
+    # ÏÔÊ¾²Ëµ¥
     Write-Host ""
-    Write-Host "è¯·é€‰æ‹©ä¸€ä¸ªç”µæºæ–¹æ¡ˆï¼š"
-    Write-Host "1. å“è¶Šæ€§èƒ½"
-    Write-Host "2. é«˜æ€§èƒ½"
-    Write-Host "3. å¹³è¡¡"
-    Write-Host "4. èŠ‚èƒ½"
+    Write-Host "ÇëÑ¡ÔñÒ»¸öµçÔ´·½°¸£º"
+    Write-Host "1. ×¿Ô½ĞÔÄÜ"
+    Write-Host "2. ¸ßĞÔÄÜ"
+    Write-Host "3. Æ½ºâ"
+    Write-Host "4. ½ÚÄÜ"
 
-    # è·å–ç”¨æˆ·è¾“å…¥
-    $choice = Read-Host "è¯·è¾“å…¥1-4"
+    # »ñÈ¡ÓÃ»§ÊäÈë
+    $choice = Read-Host "ÇëÊäÈë1-4"
 
-    # æ ¹æ®ç”¨æˆ·è¾“å…¥æ‰§è¡Œæ“ä½œ
+    # ¸ù¾İÓÃ»§ÊäÈëÖ´ĞĞ²Ù×÷
     switch ($choice) {
         "1" {
-            # å“è¶Šæ€§èƒ½ï¼šå¤åˆ¶æ–¹æ¡ˆå¹¶è·å–æ–°GUID
+            # ×¿Ô½ĞÔÄÜ£º¸´ÖÆ·½°¸²¢»ñÈ¡ĞÂGUID
             $output = powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
-            $guid = ($output | Select-String "ç”µæºæ–¹æ¡ˆ GUID: (.+?) ").Matches.Groups[1].Value
+            $guid = ($output | Select-String "µçÔ´·½°¸ GUID: (.+?) ").Matches.Groups[1].Value
             if ($guid) {
                 powercfg -setactive $guid
-                Write-Host "å·²åˆ‡æ¢åˆ°å“è¶Šæ€§èƒ½"
-            }
-            else {
-                Write-Host "æ— æ³•è·å–å“è¶Šæ€§èƒ½æ–¹æ¡ˆçš„GUID"
+                Write-Host "ÒÑÇĞ»»µ½×¿Ô½ĞÔÄÜ"
+            } else {
+                Write-Host "ÎŞ·¨»ñÈ¡×¿Ô½ĞÔÄÜ·½°¸µÄGUID"
             }
         }
         "2" {
-            # é«˜æ€§èƒ½ï¼šå¤åˆ¶æ–¹æ¡ˆå¹¶è·å–æ–°GUID
+            # ¸ßĞÔÄÜ£º¸´ÖÆ·½°¸²¢»ñÈ¡ĞÂGUID
             $output = powercfg -duplicatescheme 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
-            $guid = ($output | Select-String "ç”µæºæ–¹æ¡ˆ GUID: (.+?) ").Matches.Groups[1].Value
+            $guid = ($output | Select-String "µçÔ´·½°¸ GUID: (.+?) ").Matches.Groups[1].Value
             if ($guid) {
                 powercfg -setactive $guid
-                Write-Host "å·²åˆ‡æ¢åˆ°é«˜æ€§èƒ½"
-            }
-            else {
-                Write-Host "æ— æ³•è·å–é«˜æ€§èƒ½æ–¹æ¡ˆçš„GUID"
+                Write-Host "ÒÑÇĞ»»µ½¸ßĞÔÄÜ"
+            } else {
+                Write-Host "ÎŞ·¨»ñÈ¡¸ßĞÔÄÜ·½°¸µÄGUID"
             }
         }
         "3" {
-            # å¹³è¡¡ï¼šå¤åˆ¶æ–¹æ¡ˆå¹¶è·å–æ–°GUID
+            # Æ½ºâ£º¸´ÖÆ·½°¸²¢»ñÈ¡ĞÂGUID
             $output = powercfg -duplicatescheme 381b4222-f694-41f0-9685-ff5bb260df2e
-            $guid = ($output | Select-String "ç”µæºæ–¹æ¡ˆ GUID: (.+?) ").Matches.Groups[1].Value
+            $guid = ($output | Select-String "µçÔ´·½°¸ GUID: (.+?) ").Matches.Groups[1].Value
             if ($guid) {
                 powercfg -setactive $guid
-                Write-Host "å·²åˆ‡æ¢åˆ°å¹³è¡¡"
-            }
-            else {
-                Write-Host "æ— æ³•è·å–å¹³è¡¡æ–¹æ¡ˆçš„GUID"
+                Write-Host "ÒÑÇĞ»»µ½Æ½ºâ"
+            } else {
+                Write-Host "ÎŞ·¨»ñÈ¡Æ½ºâ·½°¸µÄGUID"
             }
         }
         "4" {
-            # èŠ‚èƒ½ï¼šå¤åˆ¶æ–¹æ¡ˆå¹¶è·å–æ–°GUID
+            # ½ÚÄÜ£º¸´ÖÆ·½°¸²¢»ñÈ¡ĞÂGUID
             $output = powercfg -duplicatescheme a1841308-3541-4fab-bc81-f71556f20b4a
-            $guid = ($output | Select-String "ç”µæºæ–¹æ¡ˆ GUID: (.+?) ").Matches.Groups[1].Value
+            $guid = ($output | Select-String "µçÔ´·½°¸ GUID: (.+?) ").Matches.Groups[1].Value
             if ($guid) {
                 powercfg -setactive $guid
-                Write-Host "å·²åˆ‡æ¢åˆ°èŠ‚èƒ½"
-            }
-            else {
-                Write-Host "æ— æ³•è·å–èŠ‚èƒ½æ–¹æ¡ˆçš„GUID"
+                Write-Host "ÒÑÇĞ»»µ½½ÚÄÜ"
+            } else {
+                Write-Host "ÎŞ·¨»ñÈ¡½ÚÄÜ·½°¸µÄGUID"
             }
         }
         default {
-            Write-Host "æ— æ•ˆçš„è¾“å…¥ï¼Œè¯·è¾“å…¥1-4"
+            Write-Host "ÎŞĞ§µÄÊäÈë£¬ÇëÊäÈë1-4"
         }
     }
 
-    # æ˜¾ç¤ºå½“å‰æ¿€æ´»çš„ç”µæºæ–¹æ¡ˆ
+    # ÏÔÊ¾µ±Ç°¼¤»îµÄµçÔ´·½°¸
     $activeScheme = powercfg -getactivescheme
-    Write-Host "å½“å‰æ¿€æ´»çš„ç”µæºæ–¹æ¡ˆï¼š$activeScheme"
+    Write-Host "µ±Ç°¼¤»îµÄµçÔ´·½°¸£º$activeScheme"
     Write-Host ""
 }
