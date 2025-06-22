@@ -142,15 +142,16 @@ foreach ($name in $processNames) {
 }
 
 Write-Host "`n=== 设置和关闭尝试完成 ===" -ForegroundColor Green
-Write-Host "`n当前版本 : 1.0.1`n脚本没有更新能力，脚本后续会有修复bug之类的，如需更新`n请访问 : https://ftnknc.lanzouo.com/b0sxutpvc`n密码:1eo8" -ForegroundColor Green
+Write-Host "`n一次性脚本，每次游戏启动后，先不要点 :安装ace: 弹窗的拒绝，否则无法停止进程，必须 :完全: 进入游戏，然后再点击脚本文件夹中的的 :ace kill启动.bat: 启动功能，如果卡在游戏启动界面，可以先终止进程或者重启，然后在按照前面说的步骤进行操作。`n当前版本 : 1.0.2`n脚本没有更新能力，脚本后续会有修复bug之类的，如需更新`n请访问 : https://ftnknc.lanzouo.com/b0sxutpvc`n密码:1eo8" -ForegroundColor Red
 
 # 添加选项菜单
 while ($true) {
     Write-Host "`n请选择一个选项：" -ForegroundColor Cyan
     Write-Host "1. 运行 '更改电源计划'"
-    Write-Host "2. 退出"
+    Write-Host "2. 运行 '反作弊启动设置'"
+    Write-Host "3. 退出"
 
-    $choice = Read-Host "请输入1或2"
+    $choice = Read-Host "请输入1、2或3"
 
     switch ($choice) {
         "1" {
@@ -158,7 +159,7 @@ while ($true) {
             $powerScriptPath = Join-Path -Path $scriptDir -ChildPath "更改电源计划.ps1"
             if (Test-Path -Path $powerScriptPath) {
                 try {
-                    Start-Process -FilePath "powershell.exe" -ArgumentList "-File `"$powerScriptPath`"" -ErrorAction Stop
+                    Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$powerScriptPath`"" -Verb RunAs -ErrorAction Stop
                     Write-Host "已运行 '更改电源计划'" -ForegroundColor Green
                 } catch {
                     Write-Host "无法运行 '更改电源计划': $($_.Exception.Message)`n请确认文件路径或权限。" -ForegroundColor Yellow
@@ -168,12 +169,26 @@ while ($true) {
             }
         }
         "2" {
+            # 运行 '反作弊启动设置.ps1'
+            $antiCheatScriptPath = Join-Path -Path $scriptDir -ChildPath "反作弊启动设置.ps1"
+            if (Test-Path -Path $antiCheatScriptPath) {
+                try {
+                    Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$antiCheatScriptPath`"" -Verb RunAs -ErrorAction Stop
+                    Write-Host "已运行 '反作弊启动设置'" -ForegroundColor Green
+                } catch {
+                    Write-Host "无法运行 '反作弊启动设置': $($_.Exception.Message)`n请确认文件路径或权限。" -ForegroundColor Yellow
+                }
+            } else {
+                Write-Host "未找到 '反作弊启动设置' 文件: $antiCheatScriptPath`n请确认文件是否存在于脚本目录中。" -ForegroundColor Yellow
+            }
+        }
+        "3" {
             # 退出脚本
             Write-Host "退出脚本" -ForegroundColor Cyan
             exit
         }
         default {
-            Write-Host "无效的输入，请输入1或2" -ForegroundColor Red
+            Write-Host "无效的输入，请输入1、2或3" -ForegroundColor Red
         }
     }
 }

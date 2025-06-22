@@ -7,6 +7,7 @@ while ($true) {
     Write-Host ""
 
     # 显示菜单
+    Write-Host "此修改是基于系统给的数值进行修改，并且没有恢复原电源计划的功能，如需恢复，请到电源计划中修改"
     Write-Host ""
     Write-Host "请选择一个电源方案："
     Write-Host "1. 卓越性能"
